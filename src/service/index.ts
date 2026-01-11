@@ -261,9 +261,9 @@ export class TaskService extends Context.Tag(
         });
 
       const updateStatus = (
-        userId: typeof UserId.Type,
         taskId: typeof TaskId.Type,
         status: TaskStatus,
+        userId: typeof UserId.Type,
       ): Effect.Effect<
         Task,
         | NotFoundError
@@ -300,7 +300,68 @@ export class TaskService extends Context.Tag(
           );
 
           yield* storage.saveTasks(updatedTasks);
+          return updatedTask;
         });
+
+      const assignedTask = (
+        taskId: typeof TaskId.Type,
+        assineeId: typeof UserId.Type,
+        requesterId: typeof UserId.Type,
+      ): Effect.Effect<
+        Task,
+        | NotFoundError
+        | UnauthorizedError
+        | FileSystemError
+        | ParseResult.ParseError
+      > =>
+        Effect.gen(function* () {
+          const tasks = yield* storage.loadTasks();
+
+          const task = tasks.find((t) => t.id === taskId);
+          if (!task) {
+            return yield* NotFoundError.make({
+              resource: "Task",
+              id: taskId,
+            });
+          }
+          if (task.createdBy !== requesterId) {
+            return yield* UnauthorizedError.make({
+              action: "Assign Task - requester not authorized",
+            });
+          }
+
+          yield* userService.findById(assineeId).pipe(
+            Effect.catchTag("NotFoundError", () =>
+              Effect.fail(
+                UnauthorizedError.make({
+                  action: "Assign Task - user does not exist",
+                }),
+              ),
+            ),
+          );
+
+          const updatedTask = new Task({
+            ...task,
+            assignedTo: assineeId,
+            updatedAt: new Date(),
+          });
+
+          const updatedTasks = tasks.map((t) =>
+            t.id === taskId ? updatedTask : t,
+          );
+          yield* storage.saveTasks(updatedTasks);
+
+          return updatedTask;
+        });
+
+      return TaskService.of({
+        create,
+        assignedTask,
+        findById,
+        listAll,
+        listByUser,
+        updateStatus,
+      });
     }),
   );
 }
