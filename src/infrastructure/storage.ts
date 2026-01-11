@@ -3,7 +3,6 @@ import { join } from "path";
 import { promises as fs } from "node:fs";
 import { Task, User } from "src/domain/models.js";
 import { FileSystemError } from "src/errors/index.js";
-import { ensure } from "effect/Array";
 
 type StorageError = FileSystemError | ParseResult.ParseError;
 
@@ -97,4 +96,4 @@ export const makeFileStorage = (dataDir: string) => {
 };
 
 export const makeStorageLayer = (dataDir: string) =>
-  Layer.sync(Storage, () => Storage.of(makeFileStorage(dataDir)));
+  Layer.sync(Storage, () => makeFileStorage(dataDir));

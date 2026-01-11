@@ -22,7 +22,7 @@ export class DuplicateError extends Schema.TaggedError<DuplicateError>(
   value: Schema.String,
 }) {}
 
-export class UnauthrizedError extends Schema.TaggedError<UnauthrizedError>(
+export class UnauthorizedError extends Schema.TaggedError<UnauthorizedError>(
   "UnauthrizedError",
 )("UnauthrizedError", {
   action: Schema.String,
@@ -40,5 +40,5 @@ export type AppError =
   | ValidationError
   | NotFoundError
   | DuplicateError
-  | UnauthrizedError
+  | UnauthorizedError
   | FileSystemError;
