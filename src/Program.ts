@@ -1,8 +1,9 @@
-import { Effect, Layer } from "effect";
+import { Duration, Effect, Layer, Schedule } from "effect";
 import { UserId } from "src/domain/models.js";
 import { makeStorageLayer } from "src/infrastructure/storage.js";
 import { TaskService, UserService } from "src/service/index.js";
 import { withPrettyLogger } from "effect-logger-pretty";
+import { yieldNowWith } from "effect/Micro";
 
 const AppLayer = TaskService.layer.pipe(
   Layer.provideMerge(UserService.layer),
@@ -21,6 +22,14 @@ const demoProgram = Effect.gen(function* () {
 
   const bob = yield* userService.register("bob@admin.com", "Bob");
   yield* Effect.logInfo(`User registered: ${bob.name} - ${bob.email}`);
+
+  yield* Effect.repeat(
+    Effect.log("."),
+    Schedule.spaced("100 millis").pipe(
+      Schedule.compose(Schedule.elapsed),
+      Schedule.whileOutput((elapsed) => elapsed < Duration.seconds(3)),
+    ),
+  );
 
   yield* Effect.log("\n✅ Creating tasks...");
   const task1 = yield* taskService.create(
