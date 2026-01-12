@@ -11,6 +11,9 @@ importers:
       effect:
         specifier: ^3.17.7
         version: 3.19.14
+      effect-logger-pretty:
+        specifier: ^0.2.0
+        version: 0.2.0(effect@3.19.14)
     devDependencies:
       '@babel/cli':
         specifier: ^7.24.8
@@ -1131,6 +1134,11 @@ packages:
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
+
+  effect-logger-pretty@0.2.0:
+    resolution: {integrity: sha512-EbwdKikpDCCh2oMakV6M8Bztvw1VgkTiDfPKwa9tJ5cGNsYS1l6zF0gjUkQv2IBeYgs7VBTDFrES9jn/o7Jr6g==}
+    peerDependencies:
+      effect: ^3.0.0
 
   effect@3.19.14:
     resolution: {integrity: sha512-3vwdq0zlvQOxXzXNKRIPKTqZNMyGCdaFUBfMPqpsyzZDre67kgC1EEHDV4EoQTovJ4w5fmJW756f86kkuz7WFA==}
@@ -3392,6 +3400,11 @@ snapshots:
       gopd: 1.2.0
 
   eastasianwidth@0.2.0: {}
+
+  effect-logger-pretty@0.2.0(effect@3.19.14):
+    dependencies:
+      effect: 3.19.14
+      picocolors: 1.1.1
 
   effect@3.19.14:
     dependencies:

@@ -2,6 +2,7 @@ import { Effect, Layer } from "effect";
 import { UserId } from "src/domain/models.js";
 import { makeStorageLayer } from "src/infrastructure/storage.js";
 import { TaskService, UserService } from "src/service/index.js";
+import { withPrettyLogger } from "effect-logger-pretty";
 
 const AppLayer = TaskService.layer.pipe(
   Layer.provideMerge(UserService.layer),
@@ -15,7 +16,7 @@ const demoProgram = Effect.gen(function* () {
   yield* Effect.log("=== Task Management Demo ===");
 
   yield* Effect.logInfo("Registering user 'Alice'...");
-  const alice = yield* userService.register("alice@admin.com", "Alice");
+  const alice = yield* userService.register("alice@example.com", "Alice");
   yield* Effect.logInfo(`User registered: ${alice.name} ${alice.email}`);
 
   const bob = yield* userService.register("bob@admin.com", "Bob");
@@ -111,4 +112,11 @@ const demoProgram = Effect.gen(function* () {
     );
 
   yield* Effect.log("\n✨ Demo completed successfully!");
+});
+
+const main = demoProgram.pipe(Effect.provide(AppLayer), withPrettyLogger);
+
+Effect.runPromise(main).catch((error) => {
+  console.error("Unexpected error:", error);
+  process.exit(1);
 });

@@ -1,4 +1,4 @@
-import { Context, Effect, Layer, ParseResult, Schedule, Schema } from "effect";
+import { Context, Effect, Layer, ParseResult, Schema } from "effect";
 import {
   Email,
   Task,
@@ -50,8 +50,8 @@ export class UserService extends Context.Tag(
       const storage = yield* Storage;
 
       const register = (
-        name: string,
         email: string,
+        name: string,
       ): Effect.Effect<
         User,
         | DuplicateError
@@ -67,14 +67,14 @@ export class UserService extends Context.Tag(
             });
           }
 
-          const validateEmail = yield* Effect.try({
-            try: () => Email.make(email),
-            catch: () =>
+          const validateEmail = yield* Schema.decode(Email)(email).pipe(
+            Effect.mapError(() =>
               ValidationError.make({
                 field: "email",
                 message: "Email is not valid",
               }),
-          });
+            ),
+          );
 
           const users = yield* storage.loadUsers();
           const existingUser = users.find((u) => u.email === validateEmail);

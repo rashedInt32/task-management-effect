@@ -1,0 +1,32 @@
+[
+  {
+    "id": "task-1768214705387-cdva8tdpgh4",
+    "title": "pick rinaaz from school",
+    "description": "This is regular task",
+    "status": "pending",
+    "taskPriority": "high",
+    "createdBy": "user-1768214705381-fs43oiuy15m",
+    "createdAt": "2026-01-12T10:45:05.387Z",
+    "updatedAt": "2026-01-12T10:45:05.387Z"
+  },
+  {
+    "id": "task-1768214705388-1c3ldqg8tds",
+    "title": "Authenctication flow",
+    "status": "in-progress",
+    "taskPriority": "low",
+    "createdBy": "user-1768214705386-0n5edsubj4ph",
+    "createdAt": "2026-01-12T10:45:05.388Z",
+    "updatedAt": "2026-01-12T10:45:05.391Z"
+  },
+  {
+    "id": "task-1768214705389-z6733rcsf3b",
+    "title": "Ci/CD pipeline setup",
+    "description": "Some descritpiont",
+    "status": "pending",
+    "taskPriority": "medium",
+    "assignedTo": "user-1768214705386-0n5edsubj4ph",
+    "createdBy": "user-1768214705381-fs43oiuy15m",
+    "createdAt": "2026-01-12T10:45:05.389Z",
+    "updatedAt": "2026-01-12T10:45:05.390Z"
+  }
+]

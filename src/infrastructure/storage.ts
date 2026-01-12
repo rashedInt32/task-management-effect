@@ -91,7 +91,7 @@ export const makeFileStorage = (dataDir: string) => {
     saveUsers: (users) => saveData(userPath, users, User),
     loadUsers: () => loadData(userPath, User),
     saveTasks: (tasks) => saveData(taskPath, tasks, Task),
-    loadTasks: () => loadData(userPath, Task),
+    loadTasks: () => loadData(taskPath, Task),
   });
 };
 
