@@ -11,7 +11,7 @@ export class Email extends Schema.String.pipe(
 ) {}
 
 export class User extends Schema.Class<User>("User")({
-  id: Schema.String,
+  id: UserId,
   email: Email,
   name: Schema.String.pipe(
     Schema.minLength(1, {
