@@ -1,0 +1,55 @@
+import { ParseResult, Schema } from "effect";
+import { Union } from "effect/Schema";
+
+export class ValidationError extends Schema.TaggedError<ValidationError>(
+  "ValidationError",
+)("ValidationError", {
+  field: Schema.String,
+  message: Schema.String,
+}) {}
+
+export class NotFoundError extends Schema.TaggedError<NotFoundError>(
+  "NotFoundError",
+)("NotFoundError", {
+  resource: Schema.String,
+  id: Schema.String,
+}) {}
+
+export class DuplicateError extends Schema.TaggedError<DuplicateError>(
+  "DuplicateError",
+)("DuplicateError", {
+  resource: Schema.String,
+  field: Schema.String,
+  value: Schema.String,
+}) {}
+
+export class UnauthorizedError extends Schema.TaggedError<UnauthorizedError>(
+  "UnauthorizedError",
+)("UnauthorizedError", {
+  action: Schema.String,
+}) {}
+
+export class FileSystemError extends Schema.TaggedError<FileSystemError>(
+  "FileSystemError",
+)("FileSystemError", {
+  operation: Schema.String,
+  path: Schema.String,
+  error: Schema.Defect,
+}) {}
+
+export const AppErrorSchema = Schema.Union(
+  NotFoundError,
+  ValidationError,
+  DuplicateError,
+  UnauthorizedError,
+  FileSystemError,
+);
+
+export type StorageError = FileSystemError | ParseResult.ParseError;
+
+export type AppError =
+  | ValidationError
+  | NotFoundError
+  | DuplicateError
+  | UnauthorizedError
+  | FileSystemError;

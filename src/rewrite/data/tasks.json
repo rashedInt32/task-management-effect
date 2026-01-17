@@ -1,0 +1,21 @@
+[
+  {
+    "id": "task-1768668333450-r9fsfjwyl3",
+    "title": "Shows demo",
+    "description": "Some description",
+    "status": "pending",
+    "taskPriority": "high",
+    "createdBy": "user-1768668333443-mk0uqqdnuk",
+    "createdAt": "2026-01-17T16:45:33.450Z",
+    "updatedAt": "2026-01-17T16:45:33.450Z"
+  },
+  {
+    "id": "task-1768668333451-saft0kvqako",
+    "title": "Anothder tasks",
+    "status": "in-progress",
+    "taskPriority": "low",
+    "createdBy": "user-1768668333449-k0lz93f8izr",
+    "createdAt": "2026-01-17T16:45:33.451Z",
+    "updatedAt": "2026-01-17T16:45:33.452Z"
+  }
+]
